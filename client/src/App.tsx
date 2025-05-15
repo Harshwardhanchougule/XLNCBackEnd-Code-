@@ -20,6 +20,7 @@ import ReputationManagement from "./pages/ReputationManagement";
 import Services from "./pages/Services";
 import LoginPage from "./pages/Login";
 import RegisterPage from "./pages/Register";
+import AdminDashboard from "./pages/AdminDashboard";
 
 function ScrollToTop() {
   const [isVisible, setIsVisible] = useState(false);
@@ -91,6 +92,7 @@ function Router() {
       
      <Route path={"/Login"} component={LoginPage} />
       <Route path="/register" component={RegisterPage} />
+      <Route path="/AdminDashboard" component={AdminDashboard} />
     </Switch>
   );
 }
