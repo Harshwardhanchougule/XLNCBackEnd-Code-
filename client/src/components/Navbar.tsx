@@ -60,37 +60,39 @@ export default function Navbar() {
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? "bg-white/70 dark:bg-gray-900/80 backdrop-blur-lg shadow-md" : "bg-transparent"
         }`}
     >
-      <div className="container mx-auto px-4">
+      <div className="max-w-[1440px] mx-auto px-4 xl:px-8"> {/* Updated container width */}
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center">
-            <span className={`text-xl font-bold ${isScrolled ? "text-gray-800 dark:text-white" : "text-white"}`}>
-              <img src={logo} alt="XLNC Technologies Logo" className="w-auto h-12 sm:h-16" />
+            <span className={`text-xl font-bold ${isScrolled ? "text-gray-800 dark:text-white" : "text-white"
+              }`}>
+              <img src={logo} alt="XLNC Technologies Logo" className="w-auto h-12 lg:h-16 xl:h-18" /> {/* Updated logo size */}
             </span>
           </Link>
 
           {/* Desktop Navigation and Contact Us Button */}
-          <div className="hidden lg:flex items-center space-x-8">
-            <nav className="flex items-center space-x-8">
+          <div className="hidden lg:flex items-center xl:space-x-10 lg:space-x-6"> {/* Updated spacing */}
+            <nav className="flex items-center xl:space-x-8 lg:space-x-6"> {/* Updated spacing */}
               <NavItem label="Services" href="/services" isScrolled={isScrolled} />
               <ProductsDropdown isScrolled={isScrolled} />
               <NavItem label="Industries" href="/industries" isScrolled={isScrolled} />
               <NavItem label="About Us" href="/about" isScrolled={isScrolled} />
               <NavItem label="Blogs" href="/blogs" isScrolled={isScrolled} />
               <NavItem label="Careers" href="/careers" isScrolled={isScrolled} />
+              <NavItem label="Login" href="/login" isScrolled={isScrolled} />
             </nav>
             <a
               href="tel:+14784124416"
-              className={`flex items-center transition-colors ${isScrolled
-                ? "text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400"
-                : "text-white hover:text-gray-200"
+              className={`flex items-center transition-colors whitespace-nowrap ${isScrolled
+                  ? "text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400"
+                  : "text-white hover:text-gray-200"
                 }`}
             >
               <Phone className="h-4 w-4 mr-2" />
-              <span>+1 478 412 416</span>
-              <img src={usa_flag} alt="USA Flag" className="h-4 w-4 sm:h-6 sm:w-6 ml-2" />
+              <span className="text-sm xl:text-base">+1 478 412 416</span>
+              <img src={usa_flag} alt="USA Flag" className="h-4 w-4 xl:h-5 xl:w-5 ml-2" />
             </a>
-            <Button asChild variant={"default"}>
+            <Button asChild variant={"default"} className="xl:px-6 lg:px-4">
               <Link href="/contact">Contact Us</Link>
             </Button>
           </div>
@@ -270,7 +272,7 @@ function ProductsDropdown({ isScrolled }: { isScrolled: boolean }) {
                 >
                   <span className="font-medium text-gray-700 dark:text-gray-200">Newsletters</span>
                   <span className="block mt-1 text-xs text-gray-500 dark:text-gray-400">Email marketing solutions</span>
-                </Link>      
+                </Link>
               </div>
             </div>
           </div>

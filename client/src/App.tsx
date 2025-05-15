@@ -18,6 +18,8 @@ import PerformanceMarketing from "./pages/PerformanceMarketing";
 import Newsletter from "./pages/Newsletter";
 import ReputationManagement from "./pages/ReputationManagement";
 import Services from "./pages/Services";
+import LoginPage from "./pages/Login";
+import RegisterPage from "./pages/Register";
 
 function ScrollToTop() {
   const [isVisible, setIsVisible] = useState(false);
@@ -86,7 +88,9 @@ function Router() {
         window.location.href = 'https://www.xlnctechnologies.com/blogs.php';
         return null;
       }} />
-      <Route component={NotFound} />
+      
+     <Route path={"/Login"} component={LoginPage} />
+      <Route path="/register" component={RegisterPage} />
     </Switch>
   );
 }
