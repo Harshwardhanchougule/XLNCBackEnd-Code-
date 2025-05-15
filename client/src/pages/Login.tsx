@@ -1,14 +1,27 @@
 // src/LoginPage.jsx
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     // const navigate = useNavigate();
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    // Fixed credentials
+    const ADMIN_EMAIL = 'admin@xlnc.com';
+    const ADMIN_PASSWORD = 'admin123';
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        alert(`Email: ${email}\nPassword: ${password}`);
+
+        // Check if credentials match
+        if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
+            // Successful login
+          window.location.href = ('/AdminDashboard');
+        } else {
+            // Invalid credentials
+            alert('Invalid credentials. Please use the correct email and password.');
+        }
     };
 
     const handleRegisterClick = () => {
@@ -52,7 +65,7 @@ const LoginPage = () => {
                 <div className="mt-4 text-center">
                     <p className="text-gray-600">Don't have an account?</p>
                     <button
-                         onClick={handleRegisterClick}
+                        onClick={handleRegisterClick}
                         className="mt-2 w-full bg-green-500 text-white py-2 rounded-md hover:bg-green-600 transition duration-300"
                     >
                         Register
