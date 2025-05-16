@@ -80,7 +80,7 @@ export default function Navbar() {
               <NavItem label="Blogs" href="/blogs" isScrolled={isScrolled} />
               <NavItem label="Careers" href="/careers" isScrolled={isScrolled} />
               <NavItem label="Login" href="/login" isScrolled={isScrolled} />
-              <NavItem label="AdminDashboard" href="/AdminDashboard" isScrolled={isScrolled} />
+              {/* <NavItem label="AdminDashboard" href="/AdminDashboard" isScrolled={isScrolled} /> */}
             </nav>
             <a
               href="tel:+14784124416"
@@ -152,7 +152,7 @@ export default function Navbar() {
               <MobileNavItem label="Blogs" href="/blogs" />
               <MobileNavItem label="Careers" href="/careers" />
               <MobileNavItem label="Login" href="/login" />
-              <MobileNavItem label="AdminDashboard" href="/AdminDashboard" />
+              {/* <MobileNavItem label="AdminDashboard" href="/AdminDashboard" /> */}
             </div>
 
             <div className="p-6">
