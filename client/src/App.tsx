@@ -21,6 +21,8 @@ import Services from "./pages/Services";
 import LoginPage from "./pages/Login";
 import RegisterPage from "./pages/Register";
 import AdminDashboard from "./pages/AdminDashboard";
+import { AuthProvider } from './pages/AuthContext';
+import PrivateRoute from './pages/PrivateRoute';
 
 function ScrollToTop() {
   const [isVisible, setIsVisible] = useState(false);
@@ -62,16 +64,26 @@ function ScrollToTop() {
 function Router() {
   return (
     <Switch>
-      <Route path="/" component={Home} />
-      <Route path="/industries" component={Industries} />
-      <Route path="/about" component={About} />
-      <Route path="/service/website-development" component={WebDevelopment} />
-      <Route path={"/service/blogging"} component={BloggingPage} />
-      <Route path={"/service/seo"} component={SEO_Page} />
-      <Route path={"/service/social-media"} component={Socialmediamarketingservices} />
-      <Route path={"/service/performance"} component={PerformanceMarketing} />
-      <Route path={"/service/reputation"} component={ReputationManagement} />
-      <Route path={"/service/newsletters"} component={Newsletter} />
+      <Route path="/login" component={LoginPage} />
+      {/* <Route path="/register" component={RegisterPage} /> */}
+      
+      {/* Protected Routes */}
+      <PrivateRoute path="/" component={Home} />
+      <PrivateRoute path="/industries" component={Industries} />
+      <PrivateRoute path="/about" component={About} />
+      <PrivateRoute path="/service/website-development" component={WebDevelopment} />
+      <PrivateRoute path="/service/blogging" component={BloggingPage} />
+      <PrivateRoute path="/service/seo" component={SEO_Page} />
+      <PrivateRoute path="/service/social-media" component={Socialmediamarketingservices} />
+      <PrivateRoute path="/service/performance" component={PerformanceMarketing} />
+      <PrivateRoute path="/service/reputation" component={ReputationManagement} />
+      <PrivateRoute path="/service/newsletters" component={Newsletter} />
+      <PrivateRoute path="/services" component={Services} />
+      
+      {/* Admin Only Route */}
+      <PrivateRoute path="/AdminDashboard" component={AdminDashboard} adminOnly={true} />
+      
+      {/* Public Routes */}
       <Route path="/privacy-policy" component={() => {
         window.location.href = 'https://www.xlnctechnologies.com/privacy-policy.php';
         return null;
@@ -80,36 +92,25 @@ function Router() {
         window.location.href = 'https://www.xlnctechnologies.com/contact_us.php';
         return null;
       }} />
-      <Route path="/careers" component={() => {
-        window.location.href = 'https://xlncacademy.zohorecruit.in/jobs/Careers';
-        return null;
-      }} />
-      <Route path="/services" component={Services} />
-      <Route path="/blogs" component={() => {
-        window.location.href = 'https://www.xlnctechnologies.com/blogs.php';
-        return null;
-      }} />
-      
-     <Route path={"/Login"} component={LoginPage} />
-      <Route path="/register" component={RegisterPage} />
-      <Route path="/AdminDashboard" component={AdminDashboard} />
     </Switch>
   );
 }
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <div className="flex flex-col min-h-screen">
-        <Navbar />
-        <main className="flex-grow">
-          <Router />
-        </main>
-        <Footer />
-        <ScrollToTop />
-      </div>
-      <Toaster />
-    </QueryClientProvider>
+    <AuthProvider>
+      <QueryClientProvider client={queryClient}>
+        <div className="flex flex-col min-h-screen">
+          <Navbar />
+          <main className="flex-grow">
+            <Router />
+          </main>
+          {/* <Footer /> */}
+          <ScrollToTop />
+        </div>
+        <Toaster />
+      </QueryClientProvider>
+    </AuthProvider>
   );
 }
 

@@ -1,26 +1,41 @@
 // src/LoginPage.jsx
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useAuth } from './AuthContext';
+import { useLocation } from 'wouter';
 
 const LoginPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    // const navigate = useNavigate();
-
-    // Fixed credentials
-    const ADMIN_EMAIL = 'admin@xlnc.com';
-    const ADMIN_PASSWORD = 'admin123';
+    const { login } = useAuth();
+    const [, setLocation] = useLocation();
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        
+        // Check for admin credentials
+        if (email === 'admin@xlnc.com' && password === 'admin123') {
+            // Set admin token and redirect to admin dashboard
+            login('admin-token', true);
+            setLocation('/AdminDashboard');
+            return;
+        }
 
-        // Check if credentials match
-        if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
-            // Successful login
-          window.location.href = ('/AdminDashboard');
-        } else {
-            // Invalid credentials
-            alert('Invalid credentials. Please use the correct email and password.');
+        try {
+            // Regular user login flow
+            const response = await fetch('/api/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password }),
+            });
+
+            const data = await response.json();
+            
+            if (response.ok) {
+                login(data.token, data.isAdmin);
+                setLocation(data.isAdmin ? '/AdminDashboard' : '/');
+            }
+        } catch (error) {
+            console.error('Login failed:', error);
         }
     };
 
@@ -29,37 +44,35 @@ const LoginPage = () => {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-500">
-            <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-sm">
-                <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
-                <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="min-h-screen flex items-center justify-center bg-gray-50">
+            <div className="max-w-md w-full space-y-8 p-8 bg-white rounded-lg shadow-lg">
+                <h2 className="text-3xl font-bold text-center">Login</h2>
+                <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
-                        <label className="block text-gray-700">Email</label>
                         <input
                             type="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            placeholder="Enter your email"
+                            placeholder="Email"
+                            className="w-full px-3 py-2 border rounded-md"
                             required
                         />
                     </div>
                     <div>
-                        <label className="block text-gray-700">Password</label>
                         <input
                             type="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            placeholder="Enter your password"
+                            placeholder="Password"
+                            className="w-full px-3 py-2 border rounded-md"
                             required
                         />
                     </div>
                     <button
                         type="submit"
-                        className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition duration-300"
+                        className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700"
                     >
-                        Login
+                        Sign In
                     </button>
                 </form>
                 <div className="mt-4 text-center">

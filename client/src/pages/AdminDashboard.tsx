@@ -41,8 +41,10 @@ const AdminDashboard: React.FC = () => {
         <div className="min-h-screen bg-gray-400">
             <Navbar /> {/* Add the Navbar component */}
             <div className="flex">
-                <Sidebar />
-                <div className="flex-1 p-6 ml-64 mt-16"> {/* Added mt-16 for navbar spacing */}
+                <div className="fixed top-16 left-0 h-[calc(150vh-84px)] overflow-y-auto">
+                    <Sidebar />
+                </div>
+                <div className="flex-1 p-6 ml-64 mt-16">
                     <div className="bg-white rounded-lg shadow-md p-6">
                         <h1 className="text-2xl font-bold mb-4 text-gray-800">Manage Blogs</h1>
                         <button
