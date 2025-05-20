@@ -68,17 +68,17 @@ function Router() {
       {/* <Route path="/register" component={RegisterPage} /> */}
       
       {/* Protected Routes */}
-      <PrivateRoute path="/" component={Home} />
-      <PrivateRoute path="/industries" component={Industries} />
-      <PrivateRoute path="/about" component={About} />
-      <PrivateRoute path="/service/website-development" component={WebDevelopment} />
-      <PrivateRoute path="/service/blogging" component={BloggingPage} />
-      <PrivateRoute path="/service/seo" component={SEO_Page} />
-      <PrivateRoute path="/service/social-media" component={Socialmediamarketingservices} />
-      <PrivateRoute path="/service/performance" component={PerformanceMarketing} />
-      <PrivateRoute path="/service/reputation" component={ReputationManagement} />
-      <PrivateRoute path="/service/newsletters" component={Newsletter} />
-      <PrivateRoute path="/services" component={Services} />
+      <Route path="/" component={Home} />
+      <Route path="/industries" component={Industries} />
+      <Route path="/about" component={About} />
+      <Route path="/service/website-development" component={WebDevelopment} />
+      <Route path="/service/blogging" component={BloggingPage} />
+      <Route path="/service/seo" component={SEO_Page} />
+      <Route path="/service/social-media" component={Socialmediamarketingservices} />
+      <Route path="/service/performance" component={PerformanceMarketing} />
+      <Route path="/service/reputation" component={ReputationManagement} />
+      <Route path="/service/newsletters" component={Newsletter} />
+      <Route path="/services" component={Services} />
       
       {/* Admin Only Route */}
       <PrivateRoute path="/AdminDashboard" component={AdminDashboard} adminOnly={true} />
@@ -101,11 +101,11 @@ function App() {
     <AuthProvider>
       <QueryClientProvider client={queryClient}>
         <div className="flex flex-col min-h-screen">
-          <Navbar />
+          {/* <Navbar /> */}
           <main className="flex-grow">
             <Router />
           </main>
-          {/* <Footer /> */}
+          <Footer />
           <ScrollToTop />
         </div>
         <Toaster />

@@ -41,7 +41,7 @@ const AdminDashboard: React.FC = () => {
         <div className="min-h-screen bg-gray-400">
             <Navbar /> {/* Add the Navbar component */}
             <div className="flex">
-                <div className="fixed top-16 left-0 h-[calc(150vh-84px)] overflow-y-auto">
+                <div >
                     <Sidebar />
                 </div>
                 <div className="flex-1 p-6 ml-64 mt-16">
