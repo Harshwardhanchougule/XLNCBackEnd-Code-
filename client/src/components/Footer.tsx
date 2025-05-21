@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
@@ -6,8 +6,49 @@ import { ChevronRight, Linkedin, Youtube } from 'lucide-react';
 import companyLogo from '@/images/xlnc_logo.png';
 import Logo from '@/images/logo/footer_crw_logo.png';
 import Logo1 from '@/images/logo/xlncacademy_logo.jpg';
+import axios from 'axios';
 
 const Footer = () => {
+  // State for services and form
+  const [services, setServices] = useState<{ name: string; url: string }[]>([]);
+  const [showForm, setShowForm] = useState(false);
+  const [form, setForm] = useState({ name: '', url: '' });
+
+  // Fetch services from backend
+  useEffect(() => {
+    fetch('/api/addServices')
+      .then(res => res.json())
+      .then(data => setServices(data));
+  }, []);
+
+  // Handle form input
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  // Handle form submit
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post('http://localhost:3001/api/addServices', form);
+
+      if (response.status === 201 || response.status === 200) {
+        setServices([...services, response.data]);
+        setForm({ name: '', url: '' });
+        setShowForm(false);
+        alert('Service added successfully!');
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.error('Server error:', error.response?.data);
+        alert(error.response?.data?.message || 'Failed to add service');
+      } else {
+        console.error('Error:', error);
+        alert('An unexpected error occurred');
+      }
+    }
+  };
+
   return (
     <footer className="bg-[#00487a] py-12">
       <div className="container mx-auto px-6">
@@ -48,24 +89,51 @@ const Footer = () => {
           <div className="space-y-6">
             <h4 className="text-xl font-semibold text-white">Our Services</h4>
             <ul className="space-y-4">
-              {[
-                { name: "Robotic Process Automation", href: "/services" },
-                { name: "Electronic Data Interchange", href: "/services" },
-                { name: "Gen AI", href: "/services" },
-                { name: "Website Development", href: "/service/website-development" },
-                { name: "IT Staff Augmentation", href: "/services" },
-                { name: "Digital Marketing", href: "/service/social-media" },
-                { name: "Cybersecurity", href: "/services" },
-                { name: "Independent Q/A Testing", href: "/services" },
-              ].map((service, index) => (
+              {services.map((service, index) => (
                 <li key={index} className="flex items-center group">
                   <ChevronRight className="h-4 w-4 mr-2 text-white group-hover:text-gray-200" />
-                  <a href={service.href} className="text-white hover:text-gray-200 transition-colors">
+                  <a
+                    href={service.url}
+                    className="text-white hover:text-gray-200 transition-colors"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     {service.name}
                   </a>
                 </li>
               ))}
             </ul>
+            <Button
+              className="mt-2 bg-white text-[#00487a] hover:bg-gray-200"
+              onClick={() => setShowForm(!showForm)}
+            >
+              Add Service
+            </Button>
+            {showForm && (
+              <form onSubmit={handleSubmit} className="mt-4 space-y-2">
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Service Name"
+                  value={form.name}
+                  onChange={handleChange}
+                  required
+                  className="w-full px-2 py-1 rounded"
+                />
+                <input
+                  type="text" // <-- Change here from "url" to "text"
+                  name="url"
+                  placeholder="Service URL"
+                  value={form.url}
+                  onChange={handleChange}
+                  required
+                  className="w-full px-2 py-1 rounded"
+                />
+                <Button type="submit" className="bg-[#00487a] text-white w-full">
+                  Save
+                </Button>
+              </form>
+            )}
           </div>
 
           {/* Our Brands Section */}
@@ -134,8 +202,8 @@ const Footer = () => {
                 <Youtube className="h-10 w-10" />
               </a>
             </Button>
-          </div>     
-           </div>
+          </div>
+        </div>
       </div>
     </footer>
   );
