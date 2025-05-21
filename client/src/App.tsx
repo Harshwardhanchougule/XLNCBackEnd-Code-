@@ -101,7 +101,7 @@ function App() {
     <AuthProvider>
       <QueryClientProvider client={queryClient}>
         <div className="flex flex-col min-h-screen">
-          {/* <Navbar /> */}
+          <Navbar />
           <main className="flex-grow">
             <Router />
           </main>
