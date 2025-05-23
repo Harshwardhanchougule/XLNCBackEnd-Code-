@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { Card, CardContent } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
@@ -6,19 +7,33 @@ import { ChevronRight, Linkedin, Youtube } from 'lucide-react';
 import companyLogo from '@/images/xlnc_logo.png';
 import Logo from '@/images/logo/footer_crw_logo.png';
 import Logo1 from '@/images/logo/xlncacademy_logo.jpg';
-import axios from 'axios';
 
 const Footer = () => {
   // State for services and form
   const [services, setServices] = useState<{ name: string; url: string }[]>([]);
   const [showForm, setShowForm] = useState(false);
   const [form, setForm] = useState({ name: '', url: '' });
+  const [errorMsg, setErrorMsg] = useState<string>('');
+  const [successMsg, setSuccessMsg] = useState<string>(''); // Add this state
+
+  const API_BASE_URL = 'http://localhost:5000'; // Backend is on port 5000
 
   // Fetch services from backend
   useEffect(() => {
-    fetch('/api/addServices')
-      .then(res => res.json())
-      .then(data => setServices(data));
+    const fetchServices = async () => {
+      try {
+        const response = await axios.get(`${API_BASE_URL}/api/items`);
+        if (response.data && Array.isArray(response.data)) {
+          setServices(response.data.reverse()); // Show newest first
+        } else {
+          setServices([]);
+        }
+      } catch (error) {
+        console.error('Error fetching services:', error);
+        setServices([]);
+      }
+    };
+    fetchServices();
   }, []);
 
   // Handle form input
@@ -29,22 +44,32 @@ const Footer = () => {
   // Handle form submit
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setErrorMsg('');
+    setSuccessMsg(''); // Clear previous success
     try {
-      const response = await axios.post('http://localhost:3001/api/addServices', form);
-
+      const response = await axios.post(
+        `${API_BASE_URL}/api/items`,
+        form,
+        { headers: { 'Content-Type': 'application/json' } }
+      );
       if (response.status === 201 || response.status === 200) {
-        setServices([...services, response.data]);
-        setForm({ name: '', url: '' });
-        setShowForm(false);
-        alert('Service added successfully!');
+        const updatedResponse = await axios.get(`${API_BASE_URL}/api/items`);
+        if (updatedResponse.data && Array.isArray(updatedResponse.data)) {
+          setServices(updatedResponse.data.reverse()); // Show newest first
+          setForm({ name: '', url: '' });
+          setShowForm(false);
+          setErrorMsg('');
+          setSuccessMsg('Data added successfully'); // Show success message in UI
+        }
       }
-    } catch (error) {
+    } catch (error: any) {
       if (axios.isAxiosError(error)) {
-        console.error('Server error:', error.response?.data);
-        alert(error.response?.data?.message || 'Failed to add service');
+        if (error.response?.data?.msg === "URL already exists") {
+          setErrorMsg("This service URL already exists.");
+        }
+        console.error('Axios error:', error.response);
       } else {
         console.error('Error:', error);
-        alert('An unexpected error occurred');
       }
     }
   };
@@ -121,7 +146,7 @@ const Footer = () => {
                   className="w-full px-2 py-1 rounded"
                 />
                 <input
-                  type="text" // <-- Change here from "url" to "text"
+                  type="text"
                   name="url"
                   placeholder="Service URL"
                   value={form.url}
@@ -129,6 +154,12 @@ const Footer = () => {
                   required
                   className="w-full px-2 py-1 rounded"
                 />
+                {errorMsg && (
+                  <div className="text-red-500 text-sm">{errorMsg}</div>
+                )}
+                {successMsg && (
+                  <div className="text-green-600 text-sm">{successMsg}</div>
+                )}
                 <Button type="submit" className="bg-[#00487a] text-white w-full">
                   Save
                 </Button>
@@ -208,5 +239,4 @@ const Footer = () => {
     </footer>
   );
 };
-
 export default Footer;
