@@ -6,13 +6,19 @@ import userRoutes from "./routes/userRoutes";
 import addServicesRoutes from "./routes/addServicesRouts";
 import { insertStaticServices } from "./models/addServices"; // <-- Add this import
 import itemsRouter from "./routes/items"; // Adjust the import path as necessary
+import reflectionRoutes from "./routes/reflection"; // Adjust the import path as necessary
 
 dotenv.config();
 connectDB();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-app.use(cors());
+app.use(cors(
+  {
+  origin: 'http://localhost:5173', // Your Vite frontend URL
+  credentials: true
+}
+));
 app.use(express.json());
 
 // app.use(
@@ -31,6 +37,8 @@ app.get("/api/items", (req: any, res: any) => {
   res.send("API Running");
 });
 app.use("/api/items", itemsRouter);
+app.use('/api/reflections', reflectionRoutes);
+
 
 // // Call static data insertion after DB connection
 // insertStaticServices().then(() => {

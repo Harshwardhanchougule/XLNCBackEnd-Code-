@@ -34,6 +34,10 @@ import HappyClient21 from "@/images/Icons/21.png"
 import HappyClient22 from "@/images/Icons/22.png"
 import HappyClient23 from "@/images/Icons/23.png"
 
+import ReflectionForm from "@/components/Reflection/Form";
+import ReflectionList from "@/components/Reflection/List";
+import { IReflection } from "@/types/reflection";
+
 import { useEffect, useRef, useState } from "react"
 import MetaTags from "./MetaTags"
 import { Card, CardContent } from "./ui/card"
@@ -92,9 +96,15 @@ const Hero = () => {
   };
 
 
+  const [newReflection, setNewReflection] = useState<IReflection | null>(null);
+
+  const handleReflectionCreated = (reflection: IReflection) => {
+    setNewReflection(reflection);
+  };
+
   return (
     <>
-      <MetaTags 
+      <MetaTags
         title="Comprehensive IT and Digital Solutions | XLNC Technologies"
         description="Explore expert tech consulting, FinTech consulting, and automation software solutions from XLNC Technologies, a leading software and IT consulting company."
       />
@@ -112,7 +122,7 @@ const Hero = () => {
               <span className="animate-blink">|</span>
             </div>
           </div>
-          <button className="bg-[#0d59de] hover:bg-[#0d59de]/80 text-white px-6 py-3 rounded-md font-medium transition-colors duration-300  border-2 border-white"  onClick={() => window.location.href = '/contact'}>
+          <button className="bg-[#0d59de] hover:bg-[#0d59de]/80 text-white px-6 py-3 rounded-md font-medium transition-colors duration-300  border-2 border-white" onClick={() => window.location.href = '/contact'}>
             Let's Talk
           </button>
 
@@ -168,6 +178,21 @@ const Hero = () => {
             </div>
           </div>
 
+          <div className="min-h-screen bg-gray-100 py-8">
+            <div className="max-w-4xl mx-auto px-4">
+              <h1 className="text-3xl font-bold text-center mb-8">AI Reflection Journal</h1>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                  <ReflectionForm onReflectionCreated={handleReflectionCreated} />
+                </div>
+                <div>
+                  <ReflectionList key={newReflection?._id || 'list'} />
+                </div>
+              </div>
+            </div>
+          </div>
+
+
 
 
           {/* Text content - centered and responsive */}
@@ -179,57 +204,57 @@ const Hero = () => {
           </div>
         </div>
       </div>
-        <div className="pb-4">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="max-w-6xl mx-auto">
-              <div 
-                className="text-center mb-16"
-                onMouseEnter={stopAutoPlay}
-                onMouseLeave={startAutoPlay}
+      <div className="pb-4">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-6xl mx-auto">
+            <div
+              className="text-center mb-16"
+              onMouseEnter={stopAutoPlay}
+              onMouseLeave={startAutoPlay}
+            >
+              <h2 className="text-3xl font-bold mb-8">OUR HAPPY CLIENTS</h2>
+              <Carousel
+                opts={{
+                  align: "start",
+                  loop: true,
+                }}
+                className="w-full max-w-full overflow-hidden"
               >
-                <h2 className="text-3xl font-bold mb-8">OUR HAPPY CLIENTS</h2>
-                <Carousel
-                  opts={{
-                    align: "start",
-                    loop: true,
-                  }}
-                  className="w-full max-w-full overflow-hidden"
-                >
-                  <CarouselContent className="-ml-1 md:-ml-4">
-                    {[
-                      HappyClient1, HappyClient2, HappyClient3, HappyClient4,
-                      HappyClient6, HappyClient7, HappyClient8,
-                      HappyClient9, HappyClient10, HappyClient11, HappyClient12,
-                      HappyClient13, HappyClient14, HappyClient15, HappyClient16,
-                      HappyClient17, HappyClient18, HappyClient19, HappyClient20,
-                      HappyClient21, HappyClient22, HappyClient23
-                    ].map((image, index) => (
-                      <CarouselItem key={index} className="pl-1 md:pl-4 basis-1/2 md:basis-1/3 lg:basis-1/4">
-                        <div className="p-1">
-                          <Card className="overflow-hidden bg-transparent">
-                            <CardContent className="relative p-0" style={{ height: '80px' }}>
-                              <img
-                                src={image}
-                                alt={`Happy Client ${index + 1}`}
-                                className="w-full h-full object-contain transition-all hover:scale-105 duration-300 px-2 md:px-4"
-                                loading="lazy"
-                                style={{ maxWidth: '150px', margin: '0 auto' }}
-                              />
-                            </CardContent>
-                          </Card>
-                        </div>
-                      </CarouselItem>
-                    ))}
-                  </CarouselContent>
-                  <div className="flex items-center justify-center gap-2 mt-4">
-                    <CarouselPrevious className="position-static" />
-                    <CarouselNext ref={happyClientsNextRef} className="position-static" />
-                  </div>
-                </Carousel>
-              </div>
+                <CarouselContent className="-ml-1 md:-ml-4">
+                  {[
+                    HappyClient1, HappyClient2, HappyClient3, HappyClient4,
+                    HappyClient6, HappyClient7, HappyClient8,
+                    HappyClient9, HappyClient10, HappyClient11, HappyClient12,
+                    HappyClient13, HappyClient14, HappyClient15, HappyClient16,
+                    HappyClient17, HappyClient18, HappyClient19, HappyClient20,
+                    HappyClient21, HappyClient22, HappyClient23
+                  ].map((image, index) => (
+                    <CarouselItem key={index} className="pl-1 md:pl-4 basis-1/2 md:basis-1/3 lg:basis-1/4">
+                      <div className="p-1">
+                        <Card className="overflow-hidden bg-transparent">
+                          <CardContent className="relative p-0" style={{ height: '80px' }}>
+                            <img
+                              src={image}
+                              alt={`Happy Client ${index + 1}`}
+                              className="w-full h-full object-contain transition-all hover:scale-105 duration-300 px-2 md:px-4"
+                              loading="lazy"
+                              style={{ maxWidth: '150px', margin: '0 auto' }}
+                            />
+                          </CardContent>
+                        </Card>
+                      </div>
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                <div className="flex items-center justify-center gap-2 mt-4">
+                  <CarouselPrevious className="position-static" />
+                  <CarouselNext ref={happyClientsNextRef} className="position-static" />
+                </div>
+              </Carousel>
             </div>
           </div>
         </div>
+      </div>
 
       <section className="relative w-full text-[#242424] overflow-hidden">
         {/* Main Content with Card and Animation */}
