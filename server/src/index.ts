@@ -36,7 +36,7 @@ app.use("/api/addServices", addServicesRoutes);
 app.get("/api/items", (req: any, res: any) => {
   res.send("API Running");
 });
-app.use("/api/items", itemsRouter);
+app.use("/api/data-items", itemsRouter);
 app.use('/api/reflections', reflectionRoutes);
 
 

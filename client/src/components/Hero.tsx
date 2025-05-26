@@ -178,7 +178,7 @@ const Hero = () => {
             </div>
           </div>
 
-          <div className="min-h-screen bg-gray-100 py-8">
+          {/* <div className="min-h-screen bg-gray-100 py-8">
             <div className="max-w-4xl mx-auto px-4">
               <h1 className="text-3xl font-bold text-center mb-8">AI Reflection Journal</h1>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -190,7 +190,7 @@ const Hero = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
 
 
 

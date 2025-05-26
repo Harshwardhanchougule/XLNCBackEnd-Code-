@@ -8,69 +8,69 @@ import companyLogo from '@/images/xlnc_logo.png';
 import Logo from '@/images/logo/footer_crw_logo.png';
 import Logo1 from '@/images/logo/xlncacademy_logo.jpg';
 
+interface DataItem {
+  _id: string;
+  name: string;
+  url: string;
+}
+
 const Footer = () => {
   // State for services and form
-  const [services, setServices] = useState<{ name: string; url: string }[]>([]);
+  const [services, setServices] = useState<DataItem[]>([]);
   const [showForm, setShowForm] = useState(false);
-  const [form, setForm] = useState({ name: '', url: '' });
-  const [errorMsg, setErrorMsg] = useState<string>('');
-  const [successMsg, setSuccessMsg] = useState<string>(''); // Add this state
+  const [formData, setFormData] = useState({ name: '', url: '' });
+  const [errorMsg, setErrorMsg] = useState('');
+  const [successMsg, setSuccessMsg] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const API_BASE_URL = 'http://localhost:5000'; // Backend is on port 5000
+  const API_BASE_URL = 'http://localhost:5000';
 
   // Fetch services from backend
-  useEffect(() => {
-    const fetchServices = async () => {
-      try {
-        const response = await axios.get(`${API_BASE_URL}/api/items`);
-        if (response.data && Array.isArray(response.data)) {
-          setServices(response.data.reverse()); // Show newest first
-        } else {
-          setServices([]);
-        }
-      } catch (error) {
-        console.error('Error fetching services:', error);
-        setServices([]);
+  const fetchServices = async () => {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/api/data-items`);
+      if (response.data && Array.isArray(response.data)) {
+        setServices(response.data.reverse());
       }
-    };
+    } catch (error) {
+      console.error('Error fetching services:', error);
+      setErrorMsg('Failed to load services');
+    }
+  };
+
+  useEffect(() => {
     fetchServices();
   }, []);
 
-  // Handle form input
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+  // Handle form input changes
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  // Handle form submit
+  // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
     setErrorMsg('');
-    setSuccessMsg(''); // Clear previous success
+    setSuccessMsg('');
+
     try {
-      const response = await axios.post(
-        `${API_BASE_URL}/api/items`,
-        form,
-        { headers: { 'Content-Type': 'application/json' } }
-      );
-      if (response.status === 201 || response.status === 200) {
-        const updatedResponse = await axios.get(`${API_BASE_URL}/api/items`);
-        if (updatedResponse.data && Array.isArray(updatedResponse.data)) {
-          setServices(updatedResponse.data.reverse()); // Show newest first
-          setForm({ name: '', url: '' });
-          setShowForm(false);
-          setErrorMsg('');
-          setSuccessMsg('Data added successfully'); // Show success message in UI
-        }
+      const response = await axios.post(`${API_BASE_URL}/api/data-items`, formData);
+      if (response.status === 200 || response.status === 201) {
+        setSuccessMsg('Service added successfully!');
+        setFormData({ name: '', url: '' });
+        setShowForm(false);
+        await fetchServices(); // Refresh the list
       }
     } catch (error: any) {
       if (axios.isAxiosError(error)) {
-        if (error.response?.data?.msg === "URL already exists") {
-          setErrorMsg("This service URL already exists.");
-        }
-        console.error('Axios error:', error.response);
+        setErrorMsg(error.response?.data?.message || 'Failed to add service');
       } else {
-        console.error('Error:', error);
+        setErrorMsg('An unexpected error occurred');
       }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -81,11 +81,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-10">
           {/* Company Logo Section */}
           <div>
-            <img
-              src={companyLogo}
-              alt="XLNC logo"
-              className="w-48 h-auto"
-            />
+            <img src={companyLogo} alt="XLNC logo" className="w-48 h-auto" />
           </div>
 
           {/* Our Company Section */}
@@ -114,8 +110,8 @@ const Footer = () => {
           <div className="space-y-6">
             <h4 className="text-xl font-semibold text-white">Our Services</h4>
             <ul className="space-y-4">
-              {services.map((service, index) => (
-                <li key={index} className="flex items-center group">
+              {services.map((service) => (
+                <li key={service._id} className="flex items-center group">
                   <ChevronRight className="h-4 w-4 mr-2 text-white group-hover:text-gray-200" />
                   <a
                     href={service.url}
@@ -128,40 +124,59 @@ const Footer = () => {
                 </li>
               ))}
             </ul>
+            
             <Button
               className="mt-2 bg-white text-[#00487a] hover:bg-gray-200"
               onClick={() => setShowForm(!showForm)}
             >
-              Add Service
+              {showForm ? 'Cancel' : 'Add Service'}
             </Button>
+
             {showForm && (
-              <form onSubmit={handleSubmit} className="mt-4 space-y-2">
-                <input
-                  type="text"
-                  name="name"
-                  placeholder="Service Name"
-                  value={form.name}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-2 py-1 rounded"
-                />
-                <input
-                  type="text"
-                  name="url"
-                  placeholder="Service URL"
-                  value={form.url}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-2 py-1 rounded"
-                />
+              <form onSubmit={handleSubmit} className="mt-4 space-y-3 bg-white p-4 rounded-lg">
+                <div className="space-y-2">
+                  <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+                    Service Name
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    required
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <label htmlFor="url" className="block text-sm font-medium text-gray-700">
+                    Service URL
+                  </label>
+                  <input
+                    type="url"
+                    id="url"
+                    name="url"
+                    value={formData.url}
+                    onChange={handleInputChange}
+                    required
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+
                 {errorMsg && (
                   <div className="text-red-500 text-sm">{errorMsg}</div>
                 )}
                 {successMsg && (
                   <div className="text-green-600 text-sm">{successMsg}</div>
                 )}
-                <Button type="submit" className="bg-[#00487a] text-white w-full">
-                  Save
+
+                <Button
+                  type="submit"
+                  className="w-full bg-[#00487a] text-white hover:bg-[#003a62]"
+                  disabled={loading}
+                >
+                  {loading ? 'Saving...' : 'Save Service'}
                 </Button>
               </form>
             )}
@@ -239,4 +254,5 @@ const Footer = () => {
     </footer>
   );
 };
+
 export default Footer;
