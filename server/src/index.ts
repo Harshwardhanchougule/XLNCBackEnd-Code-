@@ -7,6 +7,7 @@ import addServicesRoutes from "./routes/addServicesRouts";
 import { insertStaticServices } from "./models/addServices"; // <-- Add this import
 import itemsRouter from "./routes/items"; // Adjust the import path as necessary
 import reflectionRoutes from "./routes/reflection"; // Adjust the import path as necessary
+import serviceRouter from "./routes/services";
 
 dotenv.config();
 connectDB();
@@ -38,6 +39,8 @@ app.get("/api/items", (req: any, res: any) => {
 });
 app.use("/api/data-items", itemsRouter);
 app.use('/api/reflections', reflectionRoutes);
+app.use("/api/services", serviceRouter);
+
 
 
 // // Call static data insertion after DB connection

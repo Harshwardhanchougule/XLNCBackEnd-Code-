@@ -3,6 +3,9 @@ import { BarChart2, Pencil, MessageCircle, Megaphone, Users, PieChart, Settings,
 import ServiceImg from "@/images/Banner/Our services.jpg";
 import img from "@/images/XLNC/Our services.jpg";
 import MetaTags from "@/components/MetaTags";
+import { useState } from "react";
+import ServiceForm from "@/components/ServiceForm";
+import ServicesList from "@/components/ServicesList";
 const Services = () => {
     const services1 = [
         {
@@ -75,7 +78,7 @@ const Services = () => {
             description: "Align technology with business objectives through expert insights and strategic planning.",
             icon: <MessageCircle size={24} />
         }
-    ]; 
+    ];
     const scrollToServices = () => {
         const navbarHeight = 80; // Adjust this value based on your navbar height
         window.scrollTo({
@@ -83,114 +86,145 @@ const Services = () => {
             behavior: 'smooth'
         });
     };
+
+    const [showForm, setShowForm] = useState(false);
+    const [refreshKey, setRefreshKey] = useState(0);
+
+    const handleSuccess = () => {
+        setShowForm(false);
+        setRefreshKey(prev => prev + 1); // Trigger refresh of services list
+    };
     return (
         <>
-        <MetaTags 
-          title="RPA Software and EDI Services for Business Automation"
-          description="Discover robotic process automation, EDI services, and IT solutions tailored to your needs. XLNC Technologies offers advanced automated and software services."
-        />
-        <div className="min-h-screen bg-[#f8fafc]">
-            <div className="bg-gray-900 text-white min-h-screen relative overflow-hidden flex items-center">
-                {/* Background image */}
-                <div className="absolute inset-0">
-                    <img
-                        src={img}
-                        alt="SEO Background"
-                        className="w-full h-full object-cover opacity-20"
-                    />
-                </div>
-                <div className="container mx-auto px-4 py-16 relative z-10">
-                    {/* Main content */}
-                    <div className="text-center max-w-4xl mx-auto">
-                        <h1 className="text-4xl md:text-8xl font-bold mb-4">Our Services</h1>
+            <MetaTags
+                title="RPA Software and EDI Services for Business Automation"
+                description="Discover robotic process automation, EDI services, and IT solutions tailored to your needs. XLNC Technologies offers advanced automated and software services."
+            />
+            <div className="min-h-screen bg-[#f8fafc]">
+                <div className="bg-gray-900 text-white min-h-screen relative overflow-hidden flex items-center">
+                    {/* Background image */}
+                    <div className="absolute inset-0">
+                        <img
+                            src={img}
+                            alt="SEO Background"
+                            className="w-full h-full object-cover opacity-20"
+                        />
                     </div>
-                </div>
-                <div onClick={scrollToServices} className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-[bounce_2s_ease-in-out_infinite] cursor-pointer">
+                    <div className="container mx-auto px-4 py-16 relative z-10">
+                        {/* Main content */}
+                        <div className="text-center max-w-4xl mx-auto">
+                            <h1 className="text-4xl md:text-8xl font-bold mb-4">Our Services</h1>
+                        </div>
+                    </div>
+                    <div onClick={scrollToServices} className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-[bounce_2s_ease-in-out_infinite] cursor-pointer">
                         <div className="p-2 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 shadow-lg">
                             <ChevronDown size={24} className="text-white" />
                         </div>
                     </div>
-            </div>
-            <section className="relative w-full text-[#242424] overflow-hidden">
-                {/* Main Content with Card and Animation */}
-                <div className="relative z-10 max-w-7xl mx-auto px-4 py-16">
-                    <div className="bg-gray-100 rounded-2xl shadow-lg p-8 transform hover:scale-[1.02] transition-all duration-300 ease-in-out">
-                        <div className="relative overflow-hidden">
-                            {/* Animated gradient background */}
-                            <div className="absolute inset-0 bg-gradient-to-r from-blue-50 via-gray-50 to-blue-50 opacity-50 animate-gradient"></div>
-
-                            {/* Content */}
-                            <div className="relative z-10">
-                                <h2 className="text-3xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-blue-800">
-                                    Driving Innovation with Tailored IT Solutions
-                                </h2>
-                                <p className="text-lg mb-8 text-gray-700 leading-relaxed">
-                                    Innovation isn’t just about adopting new technology—it’s about creating smart, scalable, and future-ready solutions that transform the way businesses operate. At XLNC Technologies, we craft custom IT strategies that blend intelligent automation, AI-driven insights, and cloud-powered agility to fuel digital evolution.
-
-                                </p>
-                                <p className="text-lg mb-8 text-gray-700 leading-relaxed">
-                                    Whether it’s optimizing workflows, enhancing security, or building seamless digital experiences, our solutions are designed to empower businesses to adapt, scale, and lead in an ever-changing world. With innovation at the core, we don’t just solve challenges—we create opportunities for growth and transformation.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
                 </div>
-            </section>
-            <div className="min-h-screen bg-gradient-to-br from-white to-gray-100 p-8">
-                <div className="max-w-7xl mx-auto">
-                    <div className="text-center mb-12 animate-fadeIn">
-                        <h2 className="text-3xl font-bold text-gray-800 mb-4">Our Services</h2>
-                        <div className="h-1 w-24 bg-gradient-to-r from-blue-400 to-blue-600 mx-auto animate-width" />
-                    </div>
-                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {services1.map((service1, index) => (
-                            <div
-                                key={index}
-                                className="bg-white rounded-xl overflow-hidden 
-                      transform transition-all duration-500 hover:scale-105 hover:shadow-2xl 
-                      border border-gray-200 h-[220px] flex flex-col cursor-pointer
-                      animate-slideUp"
-                                style={{
-                                    animationDelay: `${index * 150}ms`
-                                }}
-                            >
-                                <div className="p-6 flex-1 group">
-                                    <div className="flex items-center mb-4">
-                                        <div className="p-3 rounded-lg bg-gradient-to-br from-blue-400 to-blue-600 
-                                  text-white mr-3 shadow-lg transform transition-all duration-300
-                                  group-hover:scale-110 group-hover:rotate-6"
-                                        >
-                                            {service1.icon}
-                                        </div>
-                                        <h3 className="text-xl font-semibold text-gray-800 leading-tight
-                                  transform transition-all duration-300 group-hover:translate-x-2">
-                                            {service1.title}
-                                        </h3>
-                                    </div>
-                                    <p className="text-gray-600 text-sm leading-relaxed
-                              transform transition-all duration-300 group-hover:translate-y-1">
-                                        {service1.description}
+                <section className="relative w-full text-[#242424] overflow-hidden">
+                    {/* Main Content with Card and Animation */}
+                    <div className="relative z-10 max-w-7xl mx-auto px-4 py-16">
+                        <div className="bg-gray-100 rounded-2xl shadow-lg p-8 transform hover:scale-[1.02] transition-all duration-300 ease-in-out">
+                            <div className="relative overflow-hidden">
+                                {/* Animated gradient background */}
+                                <div className="absolute inset-0 bg-gradient-to-r from-blue-50 via-gray-50 to-blue-50 opacity-50 animate-gradient"></div>
+
+                                {/* Content */}
+                                <div className="relative z-10">
+                                    <h2 className="text-3xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-blue-800">
+                                        Driving Innovation with Tailored IT Solutions
+                                    </h2>
+                                    <p className="text-lg mb-8 text-gray-700 leading-relaxed">
+                                        Innovation isn’t just about adopting new technology—it’s about creating smart, scalable, and future-ready solutions that transform the way businesses operate. At XLNC Technologies, we craft custom IT strategies that blend intelligent automation, AI-driven insights, and cloud-powered agility to fuel digital evolution.
+
+                                    </p>
+                                    <p className="text-lg mb-8 text-gray-700 leading-relaxed">
+                                        Whether it’s optimizing workflows, enhancing security, or building seamless digital experiences, our solutions are designed to empower businesses to adapt, scale, and lead in an ever-changing world. With innovation at the core, we don’t just solve challenges—we create opportunities for growth and transformation.
                                     </p>
                                 </div>
                             </div>
-                        ))}
+                        </div>
+                    </div>
+                </section>
+
+
+                <div className="min-h-screen bg-gradient-to-br from-white to-gray-100 p-8">
+                    <div className="max-w-7xl mx-auto">
+                        <div className="text-center mb-12 animate-fadeIn">
+                            <h2 className="text-3xl font-bold text-gray-800 mb-4">Our Services</h2>
+                            <div className="h-1 w-24 bg-gradient-to-r from-blue-400 to-blue-600 mx-auto animate-width" />
+                        </div>
+                        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                            {services1.map((service1, index) => (
+                                <div
+                                    key={index}
+                                    className="bg-white rounded-xl overflow-hidden 
+                      transform transition-all duration-500 hover:scale-105 hover:shadow-2xl 
+                      border border-gray-200 h-[220px] flex flex-col cursor-pointer
+                      animate-slideUp"
+                                    style={{
+                                        animationDelay: `${index * 150}ms`
+                                    }}
+                                >
+                                    <div className="p-6 flex-1 group">
+                                        <div className="flex items-center mb-4">
+                                            <div className="p-3 rounded-lg bg-gradient-to-br from-blue-400 to-blue-600 
+                                  text-white mr-3 shadow-lg transform transition-all duration-300
+                                  group-hover:scale-110 group-hover:rotate-6"
+                                            >
+                                                {service1.icon}
+                                            </div>
+                                            <h3 className="text-xl font-semibold text-gray-800 leading-tight
+                                  transform transition-all duration-300 group-hover:translate-x-2">
+                                                {service1.title}
+                                            </h3>
+                                        </div>
+                                        <p className="text-gray-600 text-sm leading-relaxed
+                              transform transition-all duration-300 group-hover:translate-y-1">
+                                            {service1.description}
+                                        </p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                    <div>
+                        <button
+                            onClick={() => setShowForm(!showForm)}
+                            className="fixed bottom-8 right-8 bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 transition-colors z-10"
+                        >
+                            {showForm ? "✕" : "+ Add Service"}
+                        </button>
+
+                        {showForm && (
+                            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-20">
+                                <div className="bg-white p-6 rounded-lg max-w-md w-full">
+                                    <ServiceForm onSuccess={handleSuccess} />
+                                </div>
+                            </div>
+                        )}
+
+                        <ServicesList key={refreshKey} />
+                    </div>
+
+
+                    <p className="text-lg mb-4 mt-12 text-center">
+                        For More information...
+                    </p>
+
+                    {/* CTA Button */}
+                    <div className="flex justify-center">
+                        <button
+                            onClick={() => window.location.href = '/contact'}
+                            className="bg-[#0d59de] hover:bg-[#0d59de]/80 text-white px-6 py-2 rounded-md font-medium transition-colors duration-300 mb-12"
+                        >
+                            Contact Us
+                        </button>
                     </div>
                 </div>
-                <p className="text-lg mb-4 mt-12 text-center">
-                    For More information...
-                </p>
-                {/* CTA Button */}
-                <div className="flex justify-center">
-                    <button
-                        onClick={() => window.location.href = '/contact'}
-                        className="bg-[#0d59de] hover:bg-[#0d59de]/80 text-white px-6 py-2 rounded-md font-medium transition-colors duration-300 mb-12"
-                    >
-                        Contact Us
-                    </button>
-                </div>
-            </div>
 
-        </div>
+            </div>
         </>
     );
 };
