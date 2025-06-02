@@ -1,5 +1,6 @@
 import { useState } from "react";
 import useServiceApi from "@/hooks/useServiceApi";
+import { ServiceCreateData } from "@/types/service";
 
 interface ServiceFormProps {
     onSuccess: () => void;
@@ -7,12 +8,14 @@ interface ServiceFormProps {
 }
 
 const ServiceForm = ({ onSuccess, onClose }: ServiceFormProps) => {
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState<ServiceCreateData>({
         name: "",
         description: "",
         iconUrl: ""
     });
     const { createService, loading, error } = useServiceApi();
+    const [successMessage, setSuccessMessage] = useState('');
+
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
@@ -23,10 +26,25 @@ const ServiceForm = ({ onSuccess, onClose }: ServiceFormProps) => {
         e.preventDefault();
         try {
             await createService(formData);
-            onSuccess();
+            setSuccessMessage('Service added successfully!');
             setFormData({ name: "", description: "", iconUrl: "" });
+            onSuccess();
         } catch (err) {
             console.error("Error creating service:", err);
+        }
+    };
+    const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                // Properly format the data URI
+                setFormData({
+                    ...formData,
+                    iconUrl: event.target?.result?.toString() ?? ''
+                });
+            };
+            reader.readAsDataURL(file);
         }
     };
 
@@ -93,6 +111,7 @@ const ServiceForm = ({ onSuccess, onClose }: ServiceFormProps) => {
             </div>
 
             {error && <div className="text-red-500 mb-4">{error}</div>}
+            {successMessage && <div className="success-message">{successMessage}</div>}
 
             <button
                 type="submit"

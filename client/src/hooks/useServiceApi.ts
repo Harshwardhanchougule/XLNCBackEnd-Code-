@@ -1,16 +1,21 @@
 import { useState } from "react";
 import axios from "axios";
-import { IService } from "@/types/service";
+import { IService, ServiceCreateData } from "@/types/service";
 
 const useServiceApi = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const api = axios.create({
-    baseURL: import.meta.env.VITE_API_BASE_URL,
+    baseURL: import.meta.env.VITE_API_BASE_URL || "http://localhost:5000",
+    headers: {
+      "Content-Type": "application/json",
+    },
   });
 
-  const createService = async (serviceData: Omit<IService, "_id">) => {
+  const createService = async (
+    serviceData: ServiceCreateData
+  ): Promise<IService> => {
     try {
       setLoading(true);
       setError(null);

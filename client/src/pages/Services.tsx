@@ -6,6 +6,7 @@ import MetaTags from "@/components/MetaTags";
 import { useState } from "react";
 import ServiceForm from "@/components/ServiceForm";
 import ServicesList from "@/components/ServicesList";
+import ServiceList from "@/components/ServicesList";
 const Services = () => {
     const services1 = [
         {
@@ -88,12 +89,11 @@ const Services = () => {
     };
 
     const [showForm, setShowForm] = useState(false);
-    const [refreshKey, setRefreshKey] = useState(0);
+     const [refreshKey, setRefreshKey] = useState(0);
 
-    const handleSuccess = () => {
-        setShowForm(false);
-        setRefreshKey(prev => prev + 1); // Trigger refresh of services list
-    };
+  const handleSuccess = () => {
+    setRefreshKey(prev => prev + 1);
+  };
     return (
         <>
             <MetaTags
@@ -200,8 +200,17 @@ const Services = () => {
                         {showForm && (
                             <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-20">
                                 <div className="bg-white p-6 rounded-lg max-w-md w-full">
+                                    <div className="flex justify-end">
+                                        <button onClick={() => setShowForm(false)} className="text-gray-500 hover:text-gray-700">
+                                            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                                            </svg>
+                                        </button>
+                                    </div>
                                     <ServiceForm onSuccess={handleSuccess} />
                                 </div>
+
+                               
                             </div>
                         )}
 

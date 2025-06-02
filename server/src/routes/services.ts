@@ -2,7 +2,7 @@ import { Router } from "express";
 import {
   createService,
   getServices,
-  deleteService
+  deleteService,
 } from "../controllers/service";
 
 const router = Router();
