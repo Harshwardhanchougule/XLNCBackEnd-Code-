@@ -8,6 +8,8 @@ import { insertStaticServices } from "./models/addServices"; // <-- Add this imp
 import itemsRouter from "./routes/items"; // Adjust the import path as necessary
 import reflectionRoutes from "./routes/reflection"; // Adjust the import path as necessary
 import serviceRouter from "./routes/services";
+import imageRoutes from './routes/imageRoutes';
+
 
 dotenv.config();
 connectDB();
@@ -40,6 +42,8 @@ app.get("/api/items", (req: any, res: any) => {
 app.use("/api/data-items", itemsRouter);
 app.use('/api/reflections', reflectionRoutes);
 app.use("/api/services", serviceRouter);
+app.use('/api/images', imageRoutes);
+
 
 
 

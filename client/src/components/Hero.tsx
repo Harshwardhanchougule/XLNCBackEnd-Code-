@@ -42,6 +42,9 @@ import { useEffect, useRef, useState } from "react"
 import MetaTags from "./MetaTags"
 import { Card, CardContent } from "./ui/card"
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "./ui/carousel"
+import ImageUploadForm from "./ImagesUplode/ImageUploadForm"
+import ImageList from "./ImagesUplode/ImageList"
+import ImageGallery from "./ImagesUplode/ImageGallery"
 
 const Hero = () => {
   const industries = ["INNOVATE", "AUTOMATE", "ACCELERATE "]
@@ -49,6 +52,7 @@ const Hero = () => {
   const displayText = useTypewriter(industries, 50, 50, 100)
   const autoPlayIntervalRef = useRef<NodeJS.Timeout | null>(null)
   const happyClientsNextRef = useRef(null)
+  const [refreshKey, setRefreshKey] = useState(0);
 
   // const [position, setPosition] = useState(100);
 
@@ -255,6 +259,19 @@ const Hero = () => {
           </div>
         </div>
       </div>
+
+      <div className="min-h-screen bg-gray-50 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="space-y-8">
+          <ImageUploadForm onSuccess={() => setRefreshKey(prev => prev + 1)} />
+          <ImageList refreshKey={refreshKey} />
+        </div>
+      </div>
+    </div>
+
+
+          <ImageGallery />
+
 
       <section className="relative w-full text-[#242424] overflow-hidden">
         {/* Main Content with Card and Animation */}
