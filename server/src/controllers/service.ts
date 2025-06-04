@@ -24,7 +24,7 @@ export const createService = async (req: Request, res: Response) => {
 
 export const getServices = async (req: Request, res: Response) => {
   try {
-    console.log("getServices route called"); // Add this line
+    // console.log("getServices route called"); // Add this line
     const services = await Service.find().sort({ createdAt: -1 });
     res.json(services);
   } catch (error: any) {

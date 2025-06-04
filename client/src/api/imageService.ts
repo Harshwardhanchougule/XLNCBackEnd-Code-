@@ -33,8 +33,6 @@ export const getImages = async (): Promise<IImage[]> => {
   }
 };
 
-
-
 export const deleteImage = async (id: string): Promise<void> => {
   try {
     await axios.delete("/api/images");

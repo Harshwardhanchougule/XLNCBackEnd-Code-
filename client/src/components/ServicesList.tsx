@@ -77,7 +77,7 @@ const ServiceList = () => {
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold text-gray-800 mb-8">Our Services</h1>
-      
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {services.map((service) => (
           <div key={service._id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
@@ -85,13 +85,13 @@ const ServiceList = () => {
               {service.iconUrl && (
                 <div className="flex justify-center mb-4">
                   {service.iconUrl.startsWith('data:image') ? (
-                    <img 
-                      src={service.iconUrl} 
+                    <img
+                      src={service.iconUrl}
                       alt={service.name}
                       className="h-16 w-16 object-contain"
                     />
                   ) : (
-                    <img 
+                    <img
                       src={`http://localhost:5000${service.iconUrl}`}
                       alt={service.name}
                       className="h-16 w-16 object-contain"
@@ -102,15 +102,15 @@ const ServiceList = () => {
                   )}
                 </div>
               )}
-              
+
               <h2 className="text-xl font-semibold text-gray-800 mb-2">{service.name}</h2>
-              
+
               <div className="prose prose-sm text-gray-600 mb-4">
                 {service.description.split('\n').map((paragraph, i) => (
                   <p key={i}>{paragraph}</p>
                 ))}
               </div>
-              
+
               <div className="text-xs text-gray-500 mt-4">
                 Created: {new Date(service.createdAt).toLocaleDateString()}
               </div>
