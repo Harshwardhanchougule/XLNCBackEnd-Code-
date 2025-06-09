@@ -182,6 +182,8 @@ const Hero = () => {
             </div>
           </div>
 
+            <ImageGallery />
+
           {/* <div className="min-h-screen bg-gray-100 py-8">
             <div className="max-w-4xl mx-auto px-4">
               <h1 className="text-3xl font-bold text-center mb-8">AI Reflection Journal</h1>
@@ -270,7 +272,7 @@ const Hero = () => {
     </div>
 
 
-          <ImageGallery />
+        
 
 
       <section className="relative w-full text-[#242424] overflow-hidden">

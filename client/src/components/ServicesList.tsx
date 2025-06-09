@@ -87,9 +87,7 @@ const ServiceList = () => {
             >
               <div className="p-6 flex-1 group">
                 <div className="flex items-center mb-4">
-                  <div className="p-3 rounded-lg bg-gradient-to-br from-blue-400 to-blue-600 
-                                  text-white mr-3 shadow-lg transform transition-all duration-300
-                                  group-hover:scale-110 group-hover:rotate-6"
+                  <div className=""
                   >
                     {/* Replace with actual icon component or image */}
                     {service.iconUrl && (
@@ -98,17 +96,23 @@ const ServiceList = () => {
                           <img
                             src={service.iconUrl}
                             alt={service.name}
-                            className="h-16 w-16 object-contain"
+                            className="object-contain p-3 rounded-lg bg-gradient-to-br from-blue-400 to-blue-600
+                                  text-white mr-3 shadow-lg transform transition-all duration-300
+                                  group-hover:scale-110 group-hover:rotate-6"
+                            style={{ filter: 'invert(1) hue-rotate(180deg)' }}
                           />
                         ) : (
-                          <img
-                            src={`http://localhost:5000${service.iconUrl}`}
-                            alt={service.name}
-                            className="h-16 w-16 object-contain"
-                            onError={(e) => {
-                              (e.target as HTMLImageElement).src = '/placeholder-icon.png';
-                            }}
-                          />
+                          <><h6>Icon not Found</h6></>
+                          // <img
+                          //   src={`http://localhost:5000${service.iconUrl}`}
+                          //   alt={service.name}
+                          //   className="h-16 w-16 object-contain p-3 rounded-lg bg-gradient-to-br from-blue-400 to-blue-600 
+                          //         text-white mr-3 shadow-lg transform transition-all duration-300
+                          //         group-hover:scale-110 group-hover:rotate-6"
+                          //   onError={(e) => {
+                          //     (e.target as HTMLImageElement).src = '/placeholder-icon.png';
+                          //   }}
+                          // />
                         )}
                       </div>
                     )}
