@@ -9,6 +9,8 @@ import itemsRouter from "./routes/items"; // Adjust the import path as necessary
 import reflectionRoutes from "./routes/reflection"; // Adjust the import path as necessary
 import serviceRouter from "./routes/services";
 import imageRoutes from './routes/imageRoutes';
+import industriesRouter from './routes/industries.routes';
+
 
 
 dotenv.config();
@@ -43,6 +45,7 @@ app.use("/api/data-items", itemsRouter);
 app.use('/api/reflections', reflectionRoutes);
 app.use("/api/services", serviceRouter);
 app.use('/api/images', imageRoutes);
+app.use('/api/industries', industriesRouter);
 
 
 

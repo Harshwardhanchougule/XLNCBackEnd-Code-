@@ -7,6 +7,7 @@ import image from "@/images/Banner/Industries.jpg";
 import AnimatedCardSection from "@/components/ui/animated-card-section"
 import img from "@/images/XLNC/Industries.jpg";
 import MetaTags from "@/components/MetaTags";
+import IndustriesGrid from "@/components/industries/IndustriesGrid";
 
 const Industries = () => {
     const industries = ["Financial Services", "eCommerce & Retail", "Education & Learning", "Government/Semi-Government", "Healthcare", "Insurance", "IT & Consulting", "Manufacturing", "Media & Entertainment", "Tech Startups"];
@@ -96,7 +97,7 @@ const Industries = () => {
             description: "We help real estate businesses digitize property management, streamline transactions, and enhance customer experiences with smart, AI-powered solutions.",
             icon: <Home size={24} />
         }
-    ]; 
+    ];
     const scrollToServices = () => {
         const navbarHeight = 80; // Adjust this value based on your navbar height
         window.scrollTo({
@@ -107,126 +108,131 @@ const Industries = () => {
 
     return (
         <>
-        <MetaTags 
-          title="Solutions for Finance, Retail, and Healthcare Industries"
-          description="Explore industry-specific technology solutions for financial services, eCommerce, retail, and healthcare sectors with XLNC Technologies empowers growth with IT services."
-        />
-        <div className="bg-[#f8fafc]">
-            <div className="relative overflow-hidden bg-[#020B2D]">
-                {/* Video Background */}
-                <img
-                    src={image}
-                    alt="SEO Background"
-                    className="absolute w-full h-full object-cover"
-                />
-                {/* Content */}
-                <div className="relative z-10 container mx-auto px-4 flex flex-col items-start justify-center min-h-[100vh]">
-                    <h1 className="text-3xl md:text-5xl font-bold mb-8 text-white tracking-wide uppercase">INDUSTRIES WE SERVE</h1>
+            <MetaTags
+                title="Solutions for Finance, Retail, and Healthcare Industries"
+                description="Explore industry-specific technology solutions for financial services, eCommerce, retail, and healthcare sectors with XLNC Technologies empowers growth with IT services."
+            />
+            <div className="bg-[#f8fafc]">
+                <div className="relative overflow-hidden bg-[#020B2D]">
+                    {/* Video Background */}
+                    <img
+                        src={image}
+                        alt="SEO Background"
+                        className="absolute w-full h-full object-cover"
+                    />
+                    {/* Content */}
+                    <div className="relative z-10 container mx-auto px-4 flex flex-col items-start justify-center min-h-[100vh]">
+                        <h1 className="text-3xl md:text-5xl font-bold mb-8 text-white tracking-wide uppercase">INDUSTRIES WE SERVE</h1>
 
-                    <div className="h-16 flex items-start justify-start mb-8">
-                        <div className="text-2xl md:text-4xl text-[#0d59de] font-semibold">
-                            {displayText}
-                            <span className="animate-blink">|</span>
+                        <div className="h-16 flex items-start justify-start mb-8">
+                            <div className="text-2xl md:text-4xl text-[#0d59de] font-semibold">
+                                {displayText}
+                                <span className="animate-blink">|</span>
+                            </div>
+                        </div>
+
+                        <div className="text-left mb-4 animate-fadeIn">
+                            <h2 className="text-4xl font-bold text-white mb-4">
+                                Delivered  <span className="text-blue-600">{projectCount}+</span>projects worldwide
+                                across <br />worldwide across <span className="text-blue-600">{industryCount}+</span> industries
+                            </h2>
+
+                        </div>
+                        <button onClick={() => window.location.href = '/contact'} className="bg-[#0d59de] hover:bg-[#0d59de]/80 text-white px-6 py-3 rounded-md font-medium transition-colors duration-300 ">
+                            Let's Talk
+                        </button>
+
+                        <div onClick={scrollToServices} className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-[bounce_2s_ease-in-out_infinite] cursor-pointer">
+                            <div className="p-2 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 shadow-lg">
+                                <ChevronDown size={24} className="text-white" />
+                            </div>
                         </div>
                     </div>
 
-                    <div className="text-left mb-4 animate-fadeIn">
-                        <h2 className="text-4xl font-bold text-white mb-4">
-                            Delivered  <span className="text-blue-600">{projectCount}+</span>projects worldwide
-                            across <br />worldwide across <span className="text-blue-600">{industryCount}+</span> industries
-                        </h2>
-
-                    </div>
-                    <button onClick={() => window.location.href = '/contact'} className="bg-[#0d59de] hover:bg-[#0d59de]/80 text-white px-6 py-3 rounded-md font-medium transition-colors duration-300 ">
-                        Let's Talk
-                    </button>
-
-                    <div onClick={scrollToServices} className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-[bounce_2s_ease-in-out_infinite] cursor-pointer">
-                        <div className="p-2 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 shadow-lg">
-                            <ChevronDown size={24} className="text-white" />
-                        </div>
-                    </div>
+                    {/* Gradient Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#020B2D]/50 md:bg-[linear-gradient(45deg,rgba(0,0,0,.3)_50%,rgba(0,0,0,.7)_50%)] md:bg-[length:3px_3px] md:h-full" />
                 </div>
 
-                {/* Gradient Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#020B2D]/50 md:bg-[linear-gradient(45deg,rgba(0,0,0,.3)_50%,rgba(0,0,0,.7)_50%)] md:bg-[length:3px_3px] md:h-full" />
-            </div>
+                <div className="py-10">
+                    <AnimatedCardSection
+                        title="Who We Are - A Trusted IT Service Provider"
+                        paragraphs={[
+                            "At XLNC Technologies, excellence isn't just in our name—it's in everything we do. We are more than just an IT company; we are innovation architects, crafting 360° digital transformation solutions that help businesses stay ahead in a fast-evolving digital landscape.",
+                            "With expertise in web development, digital optimization, and next-gen technology solutions, we empower organizations to scale and thrive with advanced, scalable, and result-driven strategies. Partnering with industry-leading technology providers, we deliver future-ready solutions that transform ideas into tangible digital success."
+                        ]}
+                    />
 
-            <div className="py-10">
-                <AnimatedCardSection
-                    title="Who We Are - A Trusted IT Service Provider"
-                    paragraphs={[
-                        "At XLNC Technologies, excellence isn't just in our name—it's in everything we do. We are more than just an IT company; we are innovation architects, crafting 360° digital transformation solutions that help businesses stay ahead in a fast-evolving digital landscape.",
-                        "With expertise in web development, digital optimization, and next-gen technology solutions, we empower organizations to scale and thrive with advanced, scalable, and result-driven strategies. Partnering with industry-leading technology providers, we deliver future-ready solutions that transform ideas into tangible digital success."
-                    ]}
-                />
+                    <AnimatedCardSection
+                        title="Our Expertise Across Industries"
+                        paragraphs={[
+                            "At XLNC Technologies, we don't just adapt to the digital future—we shape it. Our expertise in intelligent automation and next-gen digital solutions drives business transformation while maintaining the highest industry standards.",
+                            "With a proven track record of empowering hundreds of enterprises across 13+ industries and departments, we deliver tailored, impact-driven solutions that boost efficiency, maximize productivity, and elevate customer experiences."
+                        ]}
+                    />
 
-                <AnimatedCardSection
-                    title="Our Expertise Across Industries"
-                    paragraphs={[
-                        "At XLNC Technologies, we don't just adapt to the digital future—we shape it. Our expertise in intelligent automation and next-gen digital solutions drives business transformation while maintaining the highest industry standards.",
-                        "With a proven track record of empowering hundreds of enterprises across 13+ industries and departments, we deliver tailored, impact-driven solutions that boost efficiency, maximize productivity, and elevate customer experiences."
-                    ]}
-                />
+                    <AnimatedCardSection
+                        title="Tailored Technology Solutions for Diverse Sectors"
+                        paragraphs={[
+                            "We understand that every industry has unique challenges and requirements. That's why our solutions are designed to be flexible, scalable, and industry-specific—empowering businesses to optimize operations, workflows, and customer engagement.",
+                            "With a strong foundation in AI, automation, and digital transformation, we provide customized technology solutions that align with your sector's needs, ensuring seamless integration, long-term reliability, and measurable impact."
+                        ]}
+                    />
 
-                <AnimatedCardSection
-                    title="Tailored Technology Solutions for Diverse Sectors"
-                    paragraphs={[
-                        "We understand that every industry has unique challenges and requirements. That's why our solutions are designed to be flexible, scalable, and industry-specific—empowering businesses to optimize operations, workflows, and customer engagement.",
-                        "With a strong foundation in AI, automation, and digital transformation, we provide customized technology solutions that align with your sector's needs, ensuring seamless integration, long-term reliability, and measurable impact."
-                    ]}
-                />
+                    <div className="min-h-screen bg-gray-50 py-8">
+                        <IndustriesGrid />
+                    </div>
 
-                <div className="px-4">
-                    <div className="max-w-7xl mx-auto">
-                        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                            {services1.map((service1, index) => (
-                                <div
-                                    key={index}
-                                    className="bg-white rounded-xl overflow-hidden 
+                    <div className="px-4">
+                        <div className="max-w-7xl mx-auto">
+                            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                {services1.map((service1, index) => (
+                                    <div
+                                        key={index}
+                                        className="bg-white rounded-xl overflow-hidden 
                                 transform transition-all duration-500 hover:scale-105 hover:shadow-2xl 
                                 border border-gray-200 h-full flex flex-col cursor-pointer
                                 animate-slideUp"
-                                    style={{
-                                        animationDelay: `${index * 150}ms`
-                                    }}
-                                >
-                                    <div className="p-8 flex-1 group">
-                                        <div className="flex items-center mb-6">
-                                            <div className="p-3 rounded-lg bg-gradient-to-br from-blue-400 to-blue-600 
+                                        style={{
+                                            animationDelay: `${index * 150}ms`
+                                        }}
+                                    >
+                                        <div className="p-8 flex-1 group">
+                                            <div className="flex items-center mb-6">
+                                                <div className="p-3 rounded-lg bg-gradient-to-br from-blue-400 to-blue-600 
                                             text-white mr-4 shadow-lg transform transition-all duration-300
                                             group-hover:scale-110 group-hover:rotate-6"
-                                            >
-                                                {service1.icon}
-                                            </div>
-                                            <h3 className="text-xl font-semibold text-gray-800 leading-tight
+                                                >
+                                                    {service1.icon}
+                                                </div>
+                                                <h3 className="text-xl font-semibold text-gray-800 leading-tight
                                             transform transition-all duration-300 group-hover:translate-x-2">
-                                                {service1.title}
-                                            </h3>
-                                        </div>
-                                        <p className="text-gray-600 text-base leading-relaxed
+                                                    {service1.title}
+                                                </h3>
+                                            </div>
+                                            <p className="text-gray-600 text-base leading-relaxed
                                         transform transition-all duration-300 group-hover:translate-y-1">
-                                            {service1.description}
-                                        </p>
+                                                {service1.description}
+                                            </p>
+                                        </div>
                                     </div>
-                                </div>
-                            ))}
+                                ))}
+                            </div>
+
                         </div>
-                    </div>
-                    <div className="text-center mt-10">
-                        <p className="text-xl text-gray-700 mb-8">
-                            For More information...
-                        </p>
-                        <button
-                            onClick={() => window.location.href = '/contact'}
-                            className="bg-[#0d59de] hover:bg-[#0d59de]/80 text-white px-8 py-3 rounded-md font-medium transition-colors duration-300 text-lg"
-                        >
-                            Contact Us
-                        </button>
+                        <div className="text-center mt-10">
+                            <p className="text-xl text-gray-700 mb-8">
+                                For More information...
+                            </p>
+                            <button
+                                onClick={() => window.location.href = '/contact'}
+                                className="bg-[#0d59de] hover:bg-[#0d59de]/80 text-white px-8 py-3 rounded-md font-medium transition-colors duration-300 text-lg"
+                            >
+                                Contact Us
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         </>
     );
 };
