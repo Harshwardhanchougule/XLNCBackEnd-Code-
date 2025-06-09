@@ -87,7 +87,6 @@ const Services = () => {
             behavior: 'smooth'
         });
     };
-
     const [showForm, setShowForm] = useState(false);
      const [refreshKey, setRefreshKey] = useState(0);
 
@@ -129,7 +128,6 @@ const Services = () => {
                             <div className="relative overflow-hidden">
                                 {/* Animated gradient background */}
                                 <div className="absolute inset-0 bg-gradient-to-r from-blue-50 via-gray-50 to-blue-50 opacity-50 animate-gradient"></div>
-
                                 {/* Content */}
                                 <div className="relative z-10">
                                     <h2 className="text-3xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-blue-800">
@@ -137,7 +135,6 @@ const Services = () => {
                                     </h2>
                                     <p className="text-lg mb-8 text-gray-700 leading-relaxed">
                                         Innovation isn’t just about adopting new technology—it’s about creating smart, scalable, and future-ready solutions that transform the way businesses operate. At XLNC Technologies, we craft custom IT strategies that blend intelligent automation, AI-driven insights, and cloud-powered agility to fuel digital evolution.
-
                                     </p>
                                     <p className="text-lg mb-8 text-gray-700 leading-relaxed">
                                         Whether it’s optimizing workflows, enhancing security, or building seamless digital experiences, our solutions are designed to empower businesses to adapt, scale, and lead in an ever-changing world. With innovation at the core, we don’t just solve challenges—we create opportunities for growth and transformation.
@@ -147,8 +144,6 @@ const Services = () => {
                         </div>
                     </div>
                 </section>
-
-
                 <div className="min-h-screen bg-gradient-to-br from-white to-gray-100 p-8">
                     <div className="max-w-7xl mx-auto">
                         <div className="text-center mb-12 animate-fadeIn">
@@ -189,6 +184,7 @@ const Services = () => {
                             ))}
                         </div>
                     </div>
+                   
                     <div>
                         <button
                             onClick={() => setShowForm(!showForm)}
@@ -196,7 +192,6 @@ const Services = () => {
                         >
                             {showForm ? "✕" : "+ Add Service"}
                         </button>
-
                         {showForm && (
                             <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-20">
                                 <div className="bg-white p-6 rounded-lg max-w-md w-full">
@@ -208,20 +203,14 @@ const Services = () => {
                                         </button>
                                     </div>
                                     <ServiceForm onSuccess={handleSuccess} />
-                                </div>
-
-                               
+                                </div>     
                             </div>
                         )}
-
                         <ServicesList key={refreshKey} />
                     </div>
-
-
                     <p className="text-lg mb-4 mt-12 text-center">
                         For More information...
                     </p>
-
                     {/* CTA Button */}
                     <div className="flex justify-center">
                         <button
@@ -232,7 +221,6 @@ const Services = () => {
                         </button>
                     </div>
                 </div>
-
             </div>
         </>
     );
