@@ -10,6 +10,8 @@ import reflectionRoutes from "./routes/reflection"; // Adjust the import path as
 import serviceRouter from "./routes/services";
 import imageRoutes from './routes/imageRoutes';
 import industriesRouter from './routes/industries.routes';
+import wdPageImagesRouter from './routes/wdPageImages.routes';
+import path from 'path';
 
 
 
@@ -41,12 +43,14 @@ app.use("/api/addServices", addServicesRoutes);
 app.get("/api/items", (req: any, res: any) => {
   res.send("API Running");
 });
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+
 app.use("/api/data-items", itemsRouter);
 app.use('/api/reflections', reflectionRoutes);
 app.use("/api/services", serviceRouter);
 app.use('/api/images', imageRoutes);
 app.use('/api/industries', industriesRouter);
-
+app.use('/api/wdpageimages', wdPageImagesRouter);
 
 
 

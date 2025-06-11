@@ -103,6 +103,8 @@ import ImageCarousel from "./ImageCarousel";
 import ImageCarousel1 from "@/components/ImageWebDesgin";
 import MetaTags from '@/components/MetaTags';
 import FeatureCarousel from "@/components/FeatureCarousel";
+import WDPageImagesGrid from "@/components/wdPageImages/WDPageImagesGrid";
+import { Toaster } from "@/components/ui/toaster";
 const commonPages = [
   "Home",
   "About",
@@ -1075,7 +1077,7 @@ const WebDevelopment = () => {
 
   return (
     <>
-      <MetaTags 
+      <MetaTags
         title="Comprehensive Web Development for Your Business – XLNC"
         description="Develop dynamic, responsive websites with web development solutions focused on superior user experience, performance, and security at XLNC."
       />
@@ -1102,17 +1104,22 @@ const WebDevelopment = () => {
               </div>
             </div>
           </div>
+          
         </div>
+        <div className=" bg-gray-50 ">
+            <WDPageImagesGrid />
+            <Toaster  />
+          </div>
         <div className="bg-[#111827] py-6">
           <TestimonialCarousel testimonials={testimonialData} autoPlay={true} />
         </div>
 
-        <FeatureCarousel 
-                features={services}
-                title=""
-                cardWidth={340}
-                cardHeight={320}
-            />
+        <FeatureCarousel
+          features={services}
+          title=""
+          cardWidth={340}
+          cardHeight={320}
+        />
 
         <section className="relative w-full  text-[#242424] overflow-hidden bg-[#cbdceb]">
           {/* Main Content */}
@@ -1207,8 +1214,8 @@ const WebDevelopment = () => {
                       {item.title}
                     </h3>
                     <a
-                     target={"_blank"}
-                      href={item.link} 
+                      target={"_blank"}
+                      href={item.link}
                       className="inline-flex items-center text-sm md:text-base text-blue-500 hover:text-blue-700 font-medium"
                     >
                       Visit Website
