@@ -47,16 +47,33 @@ function ScrollToTop() {
     });
   };
 
+
+  useEffect(() => {
+    // Load Tawk.to widget script
+    const script = document.createElement("script");
+    script.type = "text/javascript";
+    script.async = true;
+    script.src = 'https://embed.tawk.to/6853f5181ecea31910e13710/1iu3vaqd6';
+    script.charset = 'UTF-8';
+    script.setAttribute('crossorigin', '*');
+    document.body.appendChild(script);
+
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
+
+
   return (
     <>
-      {isVisible && (
+      {/* {isVisible && (
         <button
           onClick={scrollToTop}
           className="fixed bottom-16 mb-8 right-4 bg-[#fbb016] text-white p-2 rounded-full shadow-lg hover:bg-[#e09203] transition-all z-0"
           aria-label="Scroll to top"
         >
           <ArrowUp />
-        </button>      )}
+        </button>      )} */}
     </>
   );
 }
@@ -66,7 +83,7 @@ function Router() {
     <Switch>
       <Route path="/login" component={LoginPage} />
       {/* <Route path="/register" component={RegisterPage} /> */}
-      
+
       {/* Protected Routes */}
       <Route path="/" component={Home} />
       <Route path="/industries" component={Industries} />
@@ -79,10 +96,10 @@ function Router() {
       <Route path="/service/reputation" component={ReputationManagement} />
       <Route path="/service/newsletters" component={Newsletter} />
       <Route path="/services" component={Services} />
-      
+
       {/* Admin Only Route */}
       <PrivateRoute path="/AdminDashboard" component={AdminDashboard} adminOnly={true} />
-      
+
       {/* Public Routes */}
       <Route path="/privacy-policy" component={() => {
         window.location.href = 'https://www.xlnctechnologies.com/privacy-policy.php';
